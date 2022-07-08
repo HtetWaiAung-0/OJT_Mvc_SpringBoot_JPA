@@ -19,12 +19,12 @@ import com.ojt.mvc_student_jpa.repo.StudentRepo;
 
 @Controller
 public class StudentController {
-    @Autowired
-    private CourseRepo courseRepo;
-    @Autowired
-    private StudentRepo studentRepo;
+	@Autowired
+	private CourseRepo courseRepo;
+	@Autowired
+	private StudentRepo studentRepo;
 
-    @RequestMapping(value = "/stuAddPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/stuAddPage", method = RequestMethod.GET)
 	public ModelAndView stuAddPage(ModelMap model) {
 		Student stuBean = new Student();
 		int i = studentRepo.getId();
@@ -35,19 +35,19 @@ public class StudentController {
 		return new ModelAndView("STU001", "stuBean", stuBean);
 	}
 
-    @RequestMapping(value = "/stuAddNextPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/stuAddNextPage", method = RequestMethod.GET)
 	public ModelAndView stuAddNextPage(ModelMap model) {
 		Student stuBean = new Student();
 		int i = studentRepo.getId();
 		String finalStuString = "STU" + String.format("%03d", i);
 		stuBean.setStuId(finalStuString);
-        List<Course> s = courseRepo.findAll();
+		List<Course> s = courseRepo.findAll();
 		model.addAttribute("courseList", s);
 		model.addAttribute("errorFill", "Success Add");
 		return new ModelAndView("STU001", "stuBean", stuBean);
 	}
 
-    @RequestMapping(value = "/addStu", method = RequestMethod.POST)
+	@RequestMapping(value = "/addStu", method = RequestMethod.POST)
 	public String addStu(@ModelAttribute("stuBean") Student stuBean, ModelMap model) {
 
 		if (stuBean.getStuName().isBlank() || stuBean.getStuDob().isBlank() || stuBean.getStuGender().isBlank()
@@ -63,7 +63,7 @@ public class StudentController {
 		}
 	}
 
-    @RequestMapping(value = "/updateStu", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateStu", method = RequestMethod.POST)
 	public String updateStu(@ModelAttribute("stuBean") Student stuBean, ModelMap model) {
 
 		if (stuBean.getStuName().isBlank()) {
@@ -71,12 +71,10 @@ public class StudentController {
 			model.addAttribute("courseList", courseRepo.findAll());
 			return "USR003";
 		} else {
-            studentRepo.deleteById(stuBean.getId());
 			studentRepo.save(stuBean);
 			return "redirect:/stuSearchPage";
 		}
 	}
-
 
 	@RequestMapping(value = "/updateStuPage", method = RequestMethod.GET)
 	public ModelAndView updateStuPage(@RequestParam("id") String stuId, ModelMap model) {
@@ -90,7 +88,7 @@ public class StudentController {
 	@RequestMapping(value = "/deleteStu", method = RequestMethod.GET)
 	public String deleteStu(@RequestParam("id") String stuId, ModelMap model) {
 
-        Student res = studentRepo.findByStuId(stuId);
+		Student res = studentRepo.findByStuId(stuId);
 		studentRepo.deleteById(res.getId());
 		model.addAttribute("errorFill", "Success delete");
 		return "redirect:/stuSearchPage";
@@ -119,7 +117,8 @@ public class StudentController {
 			searchId = searchId.isBlank() ? "#$*@" : searchId;
 			searchName = searchName.isBlank() ? "#$*@" : searchName;
 			searchCourse = searchCourse.isBlank() ? "#$*@" : searchCourse;
-			showList = studentRepo.findDistinctByStuIdOrStuNameContainingOrStuCourse_CourseNameContaining(searchId, searchName, searchCourse);
+			showList = studentRepo.findDistinctByStuIdOrStuNameContainingOrStuCourse_CourseNameContaining(searchId,
+					searchName, searchCourse);
 
 			model.addAttribute("stuList", showList);
 			return "STU003";

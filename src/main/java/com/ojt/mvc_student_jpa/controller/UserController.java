@@ -19,11 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ojt.mvc_student_jpa.model.User;
 import com.ojt.mvc_student_jpa.repo.UserRepo;
 
-
-
 @Controller
 public class UserController {
-    @Autowired
+	@Autowired
 	private UserRepo userRepo;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -78,8 +76,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("userBean") User userBean, @RequestParam("conPassword") String conPassword, ModelMap model) {
-	
+	public String addUser(@ModelAttribute("userBean") User userBean, @RequestParam("conPassword") String conPassword,
+			ModelMap model) {
+
 		if (userBean.getUserMail().isBlank() || userBean.getUserPassword().isBlank()
 				|| conPassword.isBlank() || userBean.getUserRole().isBlank()) {
 			model.addAttribute("errorFill", "Fill the Blank!!!");
@@ -88,7 +87,7 @@ public class UserController {
 			int i = userRepo.getId();
 			String stuIdString = String.format("%03d", i);
 			String finalString = "USR" + stuIdString;
-            userBean.setUserId(finalString);
+			userBean.setUserId(finalString);
 			userRepo.save(userBean);
 			return "redirect:/addUserNextPage";
 		}
@@ -108,27 +107,28 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/searchUser", method = RequestMethod.POST)
-	public ModelAndView searchUser(@ModelAttribute("userBean") User userBean,@RequestParam("searchId") String searchId,@RequestParam("searchMail") String searchMail, ModelMap model) {
+	public ModelAndView searchUser(@ModelAttribute("userBean") User userBean, @RequestParam("searchId") String searchId,
+			@RequestParam("searchMail") String searchMail, ModelMap model) {
 		List<User> showList = new ArrayList<>();
 		if (searchId.isBlank() && searchMail.isBlank()) {
 			showList = userRepo.findAll();
 			model.addAttribute("userList", showList);
 			return new ModelAndView("USR003", "userBean", new User());
 		} else {
-			showList = userRepo.findByUserIdOrUserMail(searchId,searchMail);
+			showList = userRepo.findByUserIdOrUserMail(searchId, searchMail);
 			model.addAttribute("userList", showList);
 			return new ModelAndView("USR003", "userBean", new User());
 		}
 	}
 
 	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public String updateUser(@ModelAttribute("userBean") User userBean,@RequestParam("conPassword") String conPassword, ModelMap model) {
+	public String updateUser(@ModelAttribute("userBean") User userBean, @RequestParam("conPassword") String conPassword,
+			ModelMap model) {
 		if (userBean.getUserMail().isBlank() || userBean.getUserPassword().isBlank()
 				|| conPassword.isBlank() || userBean.getUserRole().isBlank()) {
 			model.addAttribute("errorFill", "Fill the Blank!!!");
 			return "USR002";
 		} else {
-			userRepo.deleteById(userBean.getId());
 			userRepo.save(userBean);
 			model.addAttribute("errorFill", "Success Register!");
 			return "redirect:/searchUserPage";
@@ -137,7 +137,7 @@ public class UserController {
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
 	public String deleteUser(@RequestParam("id") String userId, ModelMap model) {
-        User user = userRepo.findByUserId(userId);
+		User user = userRepo.findByUserId(userId);
 		userRepo.deleteById(user.getId());
 		return "redirect:/searchUserPage";
 	}
