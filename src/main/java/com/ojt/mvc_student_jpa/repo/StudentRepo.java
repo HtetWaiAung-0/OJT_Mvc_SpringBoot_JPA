@@ -15,8 +15,7 @@ public interface StudentRepo extends JpaRepository<Student,Integer> {
         nativeQuery = true
     )
     int getId();
-
-    void deleteByStuId(String id);
+    
     Student findByStuId(String id);
     List<Student> findDistinctByStuIdOrStuNameContainingOrStuCourse_CourseNameContaining(String stuId, String stuName, String courseName);
 }
