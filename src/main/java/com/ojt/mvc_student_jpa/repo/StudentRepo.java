@@ -1,6 +1,7 @@
 package com.ojt.mvc_student_jpa.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,6 @@ public interface StudentRepo extends JpaRepository<Student,Integer> {
     )
     int getId();
     
-    Student findByStuId(String id);
+    List<Student> findByStuId(int id);
     List<Student> findDistinctByStuIdOrStuNameContainingOrStuCourse_CourseNameContaining(String stuId, String stuName, String courseName);
 }

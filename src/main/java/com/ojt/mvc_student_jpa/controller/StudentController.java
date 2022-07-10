@@ -2,6 +2,9 @@ package com.ojt.mvc_student_jpa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.swing.plaf.OptionPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,10 +69,11 @@ public class StudentController {
 	@RequestMapping(value = "/updateStu", method = RequestMethod.POST)
 	public String updateStu(@ModelAttribute("stuBean") Student stuBean, ModelMap model) {
 
-		if (stuBean.getStuName().isBlank()) {
+		if (stuBean.getStuName().isBlank() || stuBean.getStuDob().isBlank() || stuBean.getStuGender().isBlank()
+		|| stuBean.getStuPhone().isBlank() || stuBean.getStuEducation().isBlank()) {
 			model.addAttribute("errorFill", "Fill the Blank!!!");
 			model.addAttribute("courseList", courseRepo.findAll());
-			return "USR003";
+			return "STU002";
 		} else {
 			studentRepo.save(stuBean);
 			return "redirect:/stuSearchPage";
@@ -77,20 +81,20 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "/updateStuPage", method = RequestMethod.GET)
-	public ModelAndView updateStuPage(@RequestParam("id") String stuId, ModelMap model) {
+	public ModelAndView updateStuPage(@RequestParam("id") int id, ModelMap model) {
 
-		Student res = studentRepo.findByStuId(stuId);
+
+		List<Student> res = studentRepo.findByStuId(id);
+		
 		model.addAttribute("courseList", courseRepo.findAll());
-
-		return new ModelAndView("STU002", "stuBean", res);
+		model.addAttribute("stu", res);
+		return new ModelAndView("STU002", "stuBean", studentRepo.findById(id));
 	}
 
 	@RequestMapping(value = "/deleteStu", method = RequestMethod.GET)
-	public String deleteStu(@RequestParam("id") String stuId, ModelMap model) {
+	public String deleteStu(@RequestParam("id") int id, ModelMap model) {
 
-		Student res = studentRepo.findByStuId(stuId);
-		studentRepo.deleteById(res.getId());
-		model.addAttribute("errorFill", "Success delete");
+		studentRepo.deleteById(id);
 		return "redirect:/stuSearchPage";
 	}
 

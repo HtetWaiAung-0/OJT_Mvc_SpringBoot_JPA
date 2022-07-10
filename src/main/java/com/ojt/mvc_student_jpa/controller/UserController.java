@@ -31,9 +31,8 @@ public class UserController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd");
 		session.setAttribute("date", LocalDate.now().format(formatter));
 
-		boolean check = false;
-		check = userRepo.existsByUserIdAndUserMail(loginMail, loginPassword);
-		if (check == true || (loginMail.equals("admin@gmail.com") && loginPassword.equals("123"))) {
+
+		if ( userRepo.existsByUserIdAndUserMail(loginMail, loginPassword) || (loginMail.equals("admin@gmail.com") && loginPassword.equals("123"))) {
 
 			session.setAttribute("loginName", loginMail);
 			session.setAttribute("loginPassword", loginPassword);
@@ -94,30 +93,30 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/updateUserPage", method = RequestMethod.GET)
-	public ModelAndView updateUserPage(@RequestParam("id") String userId, ModelMap model) {
+	public ModelAndView updateUserPage(@RequestParam("id") int id, ModelMap model) {
 
-		return new ModelAndView("USR002", "userBean", userRepo.findByUserId(userId));
+		return new ModelAndView("USR002", "userBean", userRepo.findById(id));
 	}
 
 	@RequestMapping(value = "/searchUserPage", method = RequestMethod.GET)
-	public ModelAndView searchUserPage(ModelMap model) {
+	public String searchUserPage(ModelMap model) {
 		List<User> list = userRepo.findAll();
 		model.addAttribute("userList", list);
-		return new ModelAndView("USR003", "userBean", new User());
+		return "USR003";
 	}
 
 	@RequestMapping(value = "/searchUser", method = RequestMethod.POST)
-	public ModelAndView searchUser(@ModelAttribute("userBean") User userBean, @RequestParam("searchId") String searchId,
+	public String searchUser(@ModelAttribute("userBean") User userBean, @RequestParam("searchId") String searchId,
 			@RequestParam("searchMail") String searchMail, ModelMap model) {
 		List<User> showList = new ArrayList<>();
 		if (searchId.isBlank() && searchMail.isBlank()) {
 			showList = userRepo.findAll();
 			model.addAttribute("userList", showList);
-			return new ModelAndView("USR003", "userBean", new User());
+			return "USR003";
 		} else {
 			showList = userRepo.findByUserIdOrUserMail(searchId, searchMail);
 			model.addAttribute("userList", showList);
-			return new ModelAndView("USR003", "userBean", new User());
+			return "USR003";
 		}
 	}
 
@@ -136,9 +135,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
-	public String deleteUser(@RequestParam("id") String userId, ModelMap model) {
-		User user = userRepo.findByUserId(userId);
-		userRepo.deleteById(user.getId());
+	public String deleteUser(@RequestParam("id") int id, ModelMap model) {
+		
+		userRepo.deleteById(id);
 		return "redirect:/searchUserPage";
 	}
 }

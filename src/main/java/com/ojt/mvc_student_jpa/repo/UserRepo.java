@@ -1,6 +1,7 @@
 package com.ojt.mvc_student_jpa.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,6 @@ public interface  UserRepo extends JpaRepository<User,Integer> {
     int getId();
     
     void deleteByUserId(String id);
-    User findByUserId(String id);
     List<User> findByUserIdOrUserMail(String id,String mail);
     Boolean existsByUserIdAndUserMail(String id ,String mail);
 }

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -46,19 +47,6 @@ public class TestUserRepo {
         verify(repo,times(1)).findAll();
     }
 
-    @Test
-    public void findByStuIdTest(){
-        User user1 = new User();
-        user1.setId(1);
-        user1.setUserId("USR-001");
-        user1.setUserMail("pkar123@gmail.com");
-        user1.setUserPassword("123123");
-        user1.setUserRole("user");
-
-        when(repo.findByUserId("USR-001")).thenReturn(user1);
-        User user = repo.findByUserId("USR-001");
-        assertEquals("USR-001", user.getUserId());
-    }
 
     @Test
     public void saveTest(){

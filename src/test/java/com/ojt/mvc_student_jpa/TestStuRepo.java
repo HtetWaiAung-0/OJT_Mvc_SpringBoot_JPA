@@ -111,9 +111,11 @@ public class TestStuRepo {
         stu1.setStuPhone("09123123");
         stu1.setStuEducation("Bachlor in IT");
         stu1.setStuCourse(clist1);
-        when(repo.findByStuId("STU-001")).thenReturn(stu1);
-        Student getStu = repo.findByStuId("STU-001");
-        assertEquals(stu1, getStu);
+        List<Student> stu = new ArrayList<>();
+        stu.add(stu1);
+        when(repo.findByStuId(1)).thenReturn(stu);
+        List<Student> getStu = repo.findByStuId(1);
+        assertEquals(stu, getStu);
 
 
     }

@@ -145,7 +145,7 @@
                                 <span>Update</span>
                             </button>
 
-                            <a th:each="data: ${stu}" th:href="@{/deleteStu(id=${data.id})}">
+                            <a th:href="@{/deleteStu(id=${stuBean.stuId})}">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">

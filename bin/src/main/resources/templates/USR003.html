@@ -53,7 +53,7 @@
         <div class="main_contents">
             <div id="sub_content">
 
-                <form action="searchUser" method="post" class="row g-3 mt-3 ms-2" >
+                <form action="searchUser" method="post" class="row g-3 mt-3 ms-2" th:object="${userBean}">
                     <div class="col-auto">
                         <label for="staticEmail2" class="visually-hidden">User Id</label>
 
@@ -100,12 +100,12 @@
                             <td th:text="${data.userId}" />
                             <td th:text="${data.userMail}" />
                             <td>
-                                <a th:href="@{/updateUserPage(id=${data.id})}">
+                                <a th:href="@{/updateUserPage(id=${data.userId})}">
                                     <button type="button" class="btn btn-success"> Update</button>
                                 </a>
                             </td>
                             <td>
-                                <a th:href="@{/deleteUser(id=${data.id})}">
+                                <a th:href="@{/deleteUser(id=${data.userId})}">
                                     <button type="button" class="btn btn-secondary mb-3" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
                                         Delete

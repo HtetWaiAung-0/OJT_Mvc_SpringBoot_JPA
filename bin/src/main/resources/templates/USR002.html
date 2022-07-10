@@ -52,9 +52,8 @@
         <div class="main_contents">
             <div id="sub_content">
 
-                <form action="updateStu" method="post" th:object="${stuBean}">
-
-                    <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Student Details</h2>
+                <form action="updateUser" method="post" th:object="${userBean}">
+                    <h2 class="col-md-6 offset-md-2 mb-5 mt-4">User Update</h2>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
                         <label for="name" class="col-md-2 col-form-label"></label>
@@ -62,103 +61,58 @@
                             <div th:if="${errorFill}" th:text="${errorFill}" class="alert alert-success"></div>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control" th:field="*{id}">
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
-                        <input type="hidden" class="form-control" th:field="*{id}">
-                        <label for="studentID" class="col-md-2 col-form-label">Student ID</label>
+                        <label for="email" class="col-md-2 col-form-label">UserID</label>
                         <div class="col-md-4">
-
-                            <input type="text" class="form-control" id="studentID" th:field="*{stuId}" readonly="readonly" />
+                            <input type="text" class="form-control" th:field="*{userId}" readonly="readonly">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
-                        <label for="name" class="col-md-2 col-form-label">Name</label>
+                        <label for="email" class="col-md-2 col-form-label">Email</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="name" th:field="*{stuName}" />
+                            <input type="email" class="form-control" id="email" th:field="*{userMail}">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
-                        <label for="dob" class="col-md-2 col-form-label">DOB</label>
+                        <label for="Passowrd" class="col-md-2 col-form-label">Password</label>
                         <div class="col-md-4">
-                            <input type="date" class="form-control" id="dob" th:field="*{stuDob}" />
-                        </div>
-                    </div>
-                    <fieldset class="row mb-4">
-                        <div class="col-md-2"></div>
-                        <legend class="col-form-label col-md-2 pt-0">Gender</legend>
-                        <div class="col-md-4">
-                            <div class="form-check-inline">
-                                <input th:field="*{stuGender}" class="form-check-input" type="radio" name="gridRadios"
-                                    id="gridRadios1" value="male">
-                                <label class="form-check-label" for="gridRadios1">Male</label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input th:field="*{stuGender}" class="form-check-input" type="radio" name="gridRadios"
-                                    id="gridRadios1" value="female">
-                                <label class="form-check-label" for="gridRadios1">Female</label>
-                            </div>
-
-                        </div>
-                    </fieldset>
-
-                    <div class="row mb-4">
-                        <div class="col-md-2"></div>
-                        <label for="phone" class="col-md-2 col-form-label">Phone</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="phone" value="" th:field="*{stuPhone}" />
+                            <input type="password" class="form-control" id="name" th:field="*{userPassword}">
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
-                        <label for="education" class="col-md-2 col-form-label">Education</label>
+                        <label for="confirmPassword" class="col-md-2 col-form-label">Confirm Password</label>
                         <div class="col-md-4">
-                            <select class="form-select" aria-label="Education" id="education"
-                                th:field="*{stuEducation}">
-                                <option value="Bachelor of Information Technology" selected>Bachelor of Information
-                                    Technology</option>
-                                <option value="Diploma in IT">Diploma in IT</option>
-                                <option value="Bachelor of Computer Science">Bachelor of Computer Science</option>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                name="conPassword">
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-2"></div>
+                        <label for="userRole" class="col-md-2 col-form-label">User Role</label>
+                        <div class="col-md-4">
+                            <select th:field="*{userRole}" class="form-select" aria-label="Education" id="userRole">
+                                <option value="Admin" selected>Admin</option>
+                                <option value="User">User</option>
                             </select>
                         </div>
                     </div>
-                    <fieldset class="row mb-4">
-                        <div class="col-md-2"></div>
-                        <legend class="col-form-label col-md-2 pt-0">Attend</legend>
-                        <div class="col-md-6 offset-md-4 ms-4" style="width:350px">
-                            <div th:each="data: ${courseList}" style="display:inline; padding:5px;">
 
-                                <input class="form-check-input" type="checkbox" th:field="*{stuCourse}" id="gridRadios1"
-                                    th:value="${data.id}">
-                                <span th:text="${data.courseName}"></span>
-                            </div>
-                        </div>
-                    </fieldset>
                     <div class="row mb-4">
                         <div class="col-md-4"></div>
-
-                        <div class="col-md-4">
-
-                            <button type="submit" class="btn btn-secondary">
-
-                                <span>Update</span>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success col-md-2" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Update</button>
+                            <button type="button" class="btn btn-secondary col-md-2 "
+                                onclick="location.href = 'searchUserPage';">
+                                Back
                             </button>
-
-                            <a th:each="data: ${stu}" th:href="@{/deleteStu(id=${data.id})}">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-
-                                    <span>Delete</span>
-                                </button>
-                            </a>
                         </div>
-
-
-
-
-
+                    </div>
                 </form>
             </div>
         </div>

@@ -33,6 +33,7 @@ public class CourseController {
         int i = courseRepo.getId();
         String format = "COU" + String.format("%03d", i);
         cBean.setCourseId(format);
+        model.addAttribute("errorFill", "Success Add");
         return new ModelAndView("BUD003", "cBean", cBean);
     }
     
@@ -44,7 +45,6 @@ public class CourseController {
             return "BUD003";
         } else { 
             courseRepo.save(cBean);
-            model.addAttribute("errorFill", "Success Add");
             return "redirect:/courseAddPageNext";
         }
 

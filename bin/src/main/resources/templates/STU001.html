@@ -34,9 +34,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <!-- <div id="testsidebar">Hello World </div> -->
     <div class="container">
         <div class="sidenav">
 
@@ -51,10 +49,8 @@
         </div>
         <div class="main_contents">
             <div id="sub_content">
-
-                <form action="updateStu" method="post" th:object="${stuBean}">
-
-                    <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Student Details</h2>
+                <form th:action="@{/addStu}" method="post" th:object="${stuBean}">
+                    <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Student Registration</h2>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
                         <label for="name" class="col-md-2 col-form-label"></label>
@@ -64,18 +60,18 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
-                        <input type="hidden" class="form-control" th:field="*{id}">
-                        <label for="studentID" class="col-md-2 col-form-label">Student ID</label>
-                        <div class="col-md-4">
+                        <label class="col-md-2 col-form-label" path="stuId">Student ID</label>
 
-                            <input type="text" class="form-control" id="studentID" th:field="*{stuId}" readonly="readonly" />
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="studentID" th:field="*{stuId}"
+                                readonly="readonly" />
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-2"></div>
                         <label for="name" class="col-md-2 col-form-label">Name</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="name" th:field="*{stuName}" />
+                            <input type="text" class="form-control" id="name" value="" th:field="*{stuName}" />
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -107,7 +103,7 @@
                         <div class="col-md-2"></div>
                         <label for="phone" class="col-md-2 col-form-label">Phone</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="phone" value="" th:field="*{stuPhone}" />
+                            <input type="text" class="form-control" id="phone" th:field="*{stuPhone}" />
                         </div>
                     </div>
                     <div class="row mb-4">
@@ -126,39 +122,33 @@
                     <fieldset class="row mb-4">
                         <div class="col-md-2"></div>
                         <legend class="col-form-label col-md-2 pt-0">Attend</legend>
-                        <div class="col-md-6 offset-md-4 ms-4" style="width:350px">
-                            <div th:each="data: ${courseList}" style="display:inline; padding:5px;">
+                        <div class="col-md-4 ">
+									
+                            <div class="form-check-inline " style="width: 200px;" th:each="c: ${courseList}">
+                               
 
-                                <input class="form-check-input" type="checkbox" th:field="*{stuCourse}" id="gridRadios1"
-                                    th:value="${data.id}">
-                                <span th:text="${data.courseName}"></span>
+                                <input type="checkbox" class="form-check-input" th:field="*{stuCourse}" th:value="${c.id}" id="gridRadios1" />
+                                <label class="form-check-label" for="gridRadios1" th:text="${c.courseName}"></label>
                             </div>
-                        </div>
+                            </div>
+                      
                     </fieldset>
+
                     <div class="row mb-4">
                         <div class="col-md-4"></div>
 
                         <div class="col-md-4">
+                            <button type="reset" class="btn btn-danger ">
 
-                            <button type="submit" class="btn btn-secondary">
-
-                                <span>Update</span>
+                                Reset
+                            </button>
+                            <button type="submit" class="btn btn-secondary col-md-2" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                Add
                             </button>
 
-                            <a th:each="data: ${stu}" th:href="@{/deleteStu(id=${data.id})}">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-
-                                    <span>Delete</span>
-                                </button>
-                            </a>
                         </div>
-
-
-
-
-
+                    </div>
                 </form>
             </div>
         </div>
