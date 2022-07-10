@@ -81,14 +81,13 @@ public class StudentController {
 	}
 
 	@RequestMapping(value = "/updateStuPage", method = RequestMethod.GET)
-	public ModelAndView updateStuPage(@RequestParam("id") int id, ModelMap model) {
+	public ModelAndView updateStuPage(@RequestParam("id") int id,@RequestParam("stuId")String stuId, ModelMap model) {
 
-
-		List<Student> res = studentRepo.findByStuId(id);
+		List<Student> res = studentRepo.findByStuId(stuId);
 		
 		model.addAttribute("courseList", courseRepo.findAll());
 		model.addAttribute("stu", res);
-		return new ModelAndView("STU002", "stuBean", studentRepo.findById(id));
+		return new ModelAndView("STU002", "stuBean",  studentRepo.findById(id) );
 	}
 
 	@RequestMapping(value = "/deleteStu", method = RequestMethod.GET)

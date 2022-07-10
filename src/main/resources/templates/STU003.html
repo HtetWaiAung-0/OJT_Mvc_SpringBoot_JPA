@@ -101,7 +101,7 @@
                   <span th:each="cou: ${data.stuCourse}" th:text="${cou.courseName}+','"></span>
                 </td>
                 <td>
-                  <a th:href="@{/updateStuPage(id=${data.id})}"><button type="button"
+                  <a th:href="@{/updateStuPage(id=${data.id},stuId=${data.stuId})}"><button type="button"
                       class="btn btn-secondary mb-2">See More</button></a>
                 </td>
               </tr>

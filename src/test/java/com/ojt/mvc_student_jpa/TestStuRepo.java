@@ -113,8 +113,8 @@ public class TestStuRepo {
         stu1.setStuCourse(clist1);
         List<Student> stu = new ArrayList<>();
         stu.add(stu1);
-        when(repo.findByStuId(1)).thenReturn(stu);
-        List<Student> getStu = repo.findByStuId(1);
+        when(repo.findByStuId("123")).thenReturn(stu);
+        List<Student> getStu = repo.findByStuId("123");
         assertEquals(stu, getStu);
 
 

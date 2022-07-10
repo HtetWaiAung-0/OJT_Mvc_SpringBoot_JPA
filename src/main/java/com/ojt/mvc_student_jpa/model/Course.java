@@ -40,18 +40,7 @@ public class Course {
     public Course(){
 
     }
-    public Course(Integer id, String courseId, String courseName) {
-        this.id = id;
-        this.courseId = courseId;
-        this.courseName = courseName;
-    }
-    public Course(String courseId, String courseName) {
-        this.courseId = courseId;
-        this.courseName = courseName;
-    }
-    public Course(String courseName) {
-        this.courseName = courseName;
-    }
+
     
     
 }

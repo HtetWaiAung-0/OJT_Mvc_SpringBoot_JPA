@@ -171,7 +171,7 @@ public class TestStudentController {
 
     @Test
     public void updateStuPageTest() throws Exception{
-        this.mockMvc.perform(get("/updateStuPage").param("id", "123"))
+        this.mockMvc.perform(get("/updateStuPage").param("id", "123").param("stuId", "123"))
         .andExpect(status().isOk())
         .andExpect(view().name("STU002"))
         .andExpect(model().attributeExists("stu"))

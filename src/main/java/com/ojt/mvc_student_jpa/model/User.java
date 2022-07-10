@@ -49,21 +49,10 @@ public class User {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
-    public User(Integer id, String userId, String userMail, String userPassword, String userRole) {
-        this.id = id;
-        this.userId = userId;
-        this.userMail = userMail;
-        this.userPassword = userPassword;
-        this.userRole = userRole;
-    }
+
     public User(){
         
     }
-    public User(String userId, String userMail, String userPassword, String userRole) {
-        this.userId = userId;
-        this.userMail = userMail;
-        this.userPassword = userPassword;
-        this.userRole = userRole;
-    }
+
     
 }

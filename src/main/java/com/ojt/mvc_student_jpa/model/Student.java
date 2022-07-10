@@ -106,40 +106,8 @@ public class Student {
     public Student(){
 
     }
-    public Student(Integer id, String stuId, String stuName, String stuDob, String stuGender, String stuPhone,
-            String stuEducation, List<Course> stuCourse) {
-        this.id = id;
-        this.stuId = stuId;
-        this.stuName = stuName;
-        this.stuDob = stuDob;
-        this.stuGender = stuGender;
-        this.stuPhone = stuPhone;
-        this.stuEducation = stuEducation;
-        this.stuCourse = stuCourse;
-    }
 
-    public Student(String stuId, String stuName, String stuDob, String stuGender, String stuPhone, String stuEducation,
-            List<Course> stuCourse) {
-        this.stuId = stuId;
-        this.stuName = stuName;
-        this.stuDob = stuDob;
-        this.stuGender = stuGender;
-        this.stuPhone = stuPhone;
-        this.stuEducation = stuEducation;
-        this.stuCourse = stuCourse;
-    }
-
-    public Student(String stuId, String stuName, String stuDob, String stuGender, String stuPhone,
-            String stuEducation) {
-        this.stuId = stuId;
-        this.stuName = stuName;
-        this.stuDob = stuDob;
-        this.stuGender = stuGender;
-        this.stuPhone = stuPhone;
-        this.stuEducation = stuEducation;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "Student [id=" + id + ", stuCourse=" + stuCourse + ", stuDob=" + stuDob + ", stuEducation="
                 + stuEducation + ", stuGender=" + stuGender + ", stuId=" + stuId + ", stuName=" + stuName

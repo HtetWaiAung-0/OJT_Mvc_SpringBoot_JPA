@@ -80,7 +80,7 @@ public class TestUserController {
         user.setId(1);
         user.setUserId("");
         user.setUserMail("");
-        user.setUserPassword("123");
+        user.setUserPassword("");
         user.setUserRole("123");
         this.mockMvc.perform(post("/addUser").param("conPassword", "123").flashAttr("userBean", user))
         .andExpect(status().is(200))
@@ -122,12 +122,13 @@ public class TestUserController {
     public void searchUserFailTest() throws Exception{
         User user = new User();
         user.setId(1);
-        user.setUserId("1123");
+        user.setUserId("");
         user.setUserMail("");
         user.setUserPassword("123");
         user.setUserRole("123");
-        this.mockMvc.perform(post("/searchUser").param("searchId", "123").param("searchMail", "123").flashAttr("userBean", user))
+        this.mockMvc.perform(post("/searchUser").param("searchId", "").param("searchMail", "").flashAttr("userBean", user))
         .andExpect(status().is(200))
+        .andExpect(model().attributeExists("userList"))
         .andExpect(view().name("USR003"));
     }
     
@@ -143,6 +144,20 @@ public class TestUserController {
         this.mockMvc.perform(post("/updateUser").param("conPassword", "123").flashAttr("userBean",user))
         .andExpect(status().is(302))
         .andExpect(redirectedUrl("/searchUserPage"));
+    }
+    
+    @Test
+    public void updateUserFailTest() throws Exception{
+        User user = new User();
+        user.setId(1);
+        user.setUserId("");
+        user.setUserMail("");
+        user.setUserPassword("");
+        user.setUserRole("");
+
+        this.mockMvc.perform(post("/updateUser").param("conPassword", "").flashAttr("userBean",user))
+        .andExpect(status().is(200))
+        .andExpect(view().name("USR002"));
     }
 
 
