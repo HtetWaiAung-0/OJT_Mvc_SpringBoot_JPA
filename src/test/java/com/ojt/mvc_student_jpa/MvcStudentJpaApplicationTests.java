@@ -3,11 +3,16 @@ package com.ojt.mvc_student_jpa;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+
 @SpringBootTest
-class MvcStudentJpaApplicationTests {
+@AutoConfigureMockMvc
+public class MvcStudentJpaApplicationTests {
+   
 
 	@Test
-	void contextLoads() {
-	}
-
+	  public void applicationStarts() {
+		MvcStudentJpaApplication.main(new String[] {});
+	  }
 }

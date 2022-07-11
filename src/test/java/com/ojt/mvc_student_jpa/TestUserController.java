@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ojt.mvc_student_jpa.model.User;
@@ -21,13 +22,42 @@ public class TestUserController {
     @MockBean
     UserRepo userRepo;
 
-    // @Test
-    // public void loginPassTest() throws Exception{
-    //     this.mockMvc.perform(get("/login").param("loginMail", "admin@gmail.com").param("loginPassword", "123"))
-    //     .andExpect(status().isOk())
-    //     .andExpect(view().name("MNU001"));
+    @Autowired
+    MockHttpSession session;
+
+    @Test
+    public void loginPassTest() throws Exception{
+        session = new MockHttpSession();
+        session.setAttribute("loginPassword", "123");
+        session.setAttribute("loginMail", "123");
+        this.mockMvc.perform(post("/login").param("loginMail", "admin@gmail.com").param("loginPassword", "123").session(session))
+        .andExpect(status().isOk())
+        .andExpect(view().name("MNU001"));
         
-    // }
+    }
+    
+    @Test
+    public void logoutTest() throws Exception{
+    	session = new MockHttpSession();
+    	session.setAttribute("loginPassword", "");
+        session.setAttribute("loginName", "");
+        session.setAttribute("date", "");
+    	this.mockMvc.perform(get("/logOut").session(session))
+    	.andExpect(status().is(302))
+    	.andExpect(redirectedUrl("/"));
+    }
+
+    @Test
+    public void loginFailTest() throws Exception{
+        session = new MockHttpSession();
+        session.setAttribute("loginPassword", "123");
+        session.setAttribute("loginMail", "123");
+        this.mockMvc.perform(post("/login").param("loginMail", "admin@gmail.com").param("loginPassword", "").session(session))
+        .andExpect(status().isOk())
+        .andExpect(model().attributeExists("error"))
+        .andExpect(view().name("LGN001"));
+        
+    }
 
     @Test
     public void welcomePageTest() throws Exception{
